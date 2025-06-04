@@ -1,0 +1,14 @@
+[
+    {
+        "type": "Fatal Error",
+        "date": "2025-06-04",
+        "time": "20:20:43",
+        "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:5\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 5"
+    },
+    {
+        "type": "Fatal Error",
+        "date": "2025-06-04",
+        "time": "20:21:02",
+        "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:5\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 5"
+    }
+]

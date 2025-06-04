@@ -11,6 +11,12 @@ if (file_exists($logFile)) {
     }
 }
 
+
+/**
+ * @param string $type
+ * @param string $message
+ * @return void
+ */
 function logMessage(string $type, string $message): void {
     $entry = [
         'type' => $type,

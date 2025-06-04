@@ -1,0 +1,10 @@
+version: '3.9'
+
+
+services:
+  algorithms:
+    build: ./
+    ports:
+      - 80:80
+    volumes:
+      - ./src/:/var/www/html

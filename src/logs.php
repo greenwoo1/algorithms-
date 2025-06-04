@@ -1,11 +1,9 @@
 <?php
-// logs.php
 date_default_timezone_set('Europe/Kyiv');
 
 $logFile = __DIR__ . '/log.json';
 $GLOBALS['logs'] = [];
 
-// Якщо файл існує — зчитай поточні логи
 if (file_exists($logFile)) {
     $existing = json_decode(file_get_contents($logFile), true);
     if (is_array($existing)) {
@@ -23,20 +21,27 @@ function logMessage(string $type, string $message): void {
     $GLOBALS['logs'][] = $entry;
 }
 
-// Перехоплює warnings/notices
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+error_reporting(E_ALL);
+
+ob_start();
+
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     logMessage('Warning/Error', "$errstr in $errfile on line $errline");
+    return true; // щоб PHP сам не виводив
 });
 
-// Перехоплює фатальні помилки
-register_shutdown_function(function () {
+register_shutdown_function(function () use ($logFile) {
     $error = error_get_last();
     if ($error !== NULL) {
         logMessage('Fatal Error', "{$error['message']} in {$error['file']} on line {$error['line']}");
     }
-    // Зберігаємо всі логи в масиві
-    file_put_contents(__DIR__ . '/log.json', json_encode($GLOBALS['logs'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-});
 
-// Починаємо перехоплювати весь вивід
-ob_start();
+    $output = ob_get_clean();
+    if (!empty($output)) {
+        logMessage('Success', trim($output));
+    }
+
+    file_put_contents($logFile, json_encode($GLOBALS['logs'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+});

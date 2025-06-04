@@ -2,13 +2,43 @@
     {
         "type": "Fatal Error",
         "date": "2025-06-04",
-        "time": "20:20:43",
+        "time": "20:24:54",
         "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:5\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 5"
     },
     {
         "type": "Fatal Error",
         "date": "2025-06-04",
-        "time": "20:21:02",
+        "time": "20:25:08",
         "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:5\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 5"
+    },
+    {
+        "type": "Success",
+        "date": "2025-06-04",
+        "time": "20:25:59",
+        "message": "Hello world!"
+    },
+    {
+        "type": "Fatal Error",
+        "date": "2025-06-04",
+        "time": "20:26:25",
+        "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:9\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 9"
+    },
+    {
+        "type": "Success",
+        "date": "2025-06-04",
+        "time": "20:26:25",
+        "message": "Hello world!"
+    },
+    {
+        "type": "Fatal Error",
+        "date": "2025-06-04",
+        "time": "20:27:13",
+        "message": "Uncaught Error: Call to undefined function printHello() in \/var\/www\/html\/index.php:9\nStack trace:\n#0 {main}\n  thrown in \/var\/www\/html\/index.php on line 9"
+    },
+    {
+        "type": "Success",
+        "date": "2025-06-04",
+        "time": "20:27:13",
+        "message": "Hello world!"
     }
 ]

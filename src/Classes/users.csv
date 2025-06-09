@@ -1,0 +1,5 @@
+name,email,age,phone
+ John Doe , john@example.COM ,  28 , +380(97)123-45-67
+jane smith , jane_smith@example.com , 17 , 0971234567
+Ivan  Petrov, ivan.petrov@gmail.COM , 21 , +38 097 111 22 33
+, invalid_email , , 12345

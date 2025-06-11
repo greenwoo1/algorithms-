@@ -12,6 +12,9 @@ class Normalization
         $this->data = $data;
     }
 
+    /**
+     * @return array
+     */
     public function getData(): array
     {
         return $this->data;
@@ -24,11 +27,46 @@ class Normalization
      */
     public static function setData(string $path): array
     {
-        $file = fopen($path, "r");
-        $size = filesize($path);
-        $content = fread($file, $size);
+        $rows = [];
+        if (($handle = fopen($path, "r")) !== false) {
+            while (($data = fgetcsv($handle, 1000, ",", '"', "\\")) !== false) {
+                $rows[] = $data;
+            }
+            fclose($handle);
+        }
 
-        return explode(",", $content);
+        return $rows;
+    }
+
+
+    /**
+     * @param array|string $data
+     * @return array|string
+     */
+    public function cleanData(array|string $data): array|string
+    {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->cleanData($value);
+            }
+            return $data;
+        }
+
+        $data = trim($data);
+        $data = preg_replace('/\s+/', ' ', $data);
+        $data = mb_strtolower($data, 'UTF-8');
+
+        $digits = preg_replace('/\D+/', '', $data);
+
+        if (preg_match('/^0\d{9}$/', $digits)) {
+            $digits = '380' . substr($digits, 1);
+        }
+
+        if (strlen($digits) >= 10 && strlen($digits) <= 12) {
+            return $digits;
+        }
+
+        return $data;
     }
 
 
@@ -36,36 +74,24 @@ class Normalization
      * @param array $data
      * @return array
      */
-    public function cleanData(array $data): array
+    public static function getAssocArray(array $data): array
     {
-        $cleanedData = [];
-        $data = str_replace(['(', ')', '+', '-', ' '], '', $data);
+        $assocArray = [];
+
+        $headers = array_map('trim', array_shift($data));
 
         foreach ($data as $row) {
-            $columns = explode(",", $row);
+            $values = array_map('trim', $row);
 
-            if (isset($columns[3]) && preg_match('/^0\d{9}$/', $columns[3])) {
-                $columns[3] = '38' . substr($columns[3], 1);
+            if (count($values) !== count($headers)) {
+                continue;
             }
 
-            $cleanedData[] = implode(",", $columns);
+            $assocArray[] = array_combine($headers, $values);
         }
 
-        return $cleanedData;
+        return $assocArray;
     }
-
-    public function formatData(array $data): array
-    {
-        $lowerCaseData = strtolower($data);
-
-        $formatedData = str_replace(['(', ')', '+', '-', ' '], '', $lowerCaseData);
-
-        return $formatedData;
-    }
-
-
-
-
 
 
 
